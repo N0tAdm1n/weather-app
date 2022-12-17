@@ -4,6 +4,7 @@ function convertTo12hrs(time24hrs) {
   let am_pm = "AM";
   let hours24hr = Number(timeArray[0]);
   let hours12hr;
+  let minutes12hr;
 
   if (hours24hr > 12) {
     am_pm = "PM";
@@ -14,7 +15,14 @@ function convertTo12hrs(time24hrs) {
     hours12hr = hours24hr % 12;
   }
 
-  return `${hours12hr}:${timeArray[1]} ${am_pm}`;
+  //add a 0 to minutes if less than 10
+  if (Number(timeArray[1]) < 10) {
+    minutes12hr = `0${timeArray[1]}`;
+  } else {
+    minutes12hr = `${timeArray[1]}`;
+  }
+
+  return `${hours12hr}:${minutes12hr} ${am_pm}`;
 }
 
 function getWeatherStatusBG(weatherMainStatus) {
