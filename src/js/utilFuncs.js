@@ -60,4 +60,39 @@ function getWeatherStatusBG(weatherMainStatus) {
   return url;
 }
 
-export { convertTo12hrs, getWeatherStatusBG };
+function getDayFromFullDate(text) {
+  let date = text.split(" ")[0];
+  let day = date.split("-")[2];
+
+  return Number(day);
+}
+
+function sortIntoDatedArray(data) {
+  let datedArray = [];
+
+  let currentDay = Number(new Date().getDate());
+  for (let i = 0, tempArray = []; i < data.length; i++) {
+    if (currentDay == getDayFromFullDate(data[i].dt_txt)) {
+      tempArray.push(data[i].main.feels_like);
+    } else {
+      datedArray.push({
+        date: currentDay,
+        tempArray,
+      });
+
+      currentDay = getDayFromFullDate(data[i].dt_txt);
+      tempArray = [];
+      tempArray.push(data[i].main.feels_like);
+    }
+    if (i == data.length - 1) {
+      datedArray.push({
+        date: currentDay,
+        tempArray,
+      });
+    }
+  }
+
+  return datedArray;
+}
+
+export { convertTo12hrs, getWeatherStatusBG, sortIntoDatedArray };
