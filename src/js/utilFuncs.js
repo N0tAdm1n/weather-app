@@ -67,10 +67,11 @@ function getDayFromFullDate(text) {
   return Number(day);
 }
 
+// returns an array of weather data sorted by day
 function sortIntoDatedArray(data) {
   let datedArray = [];
-
   let currentDay = Number(new Date().getDate());
+
   for (let i = 0, tempArray = []; i < data.length; i++) {
     if (currentDay == getDayFromFullDate(data[i].dt_txt)) {
       tempArray.push(data[i].main.feels_like);
@@ -95,4 +96,27 @@ function sortIntoDatedArray(data) {
   return datedArray;
 }
 
-export { convertTo12hrs, getWeatherStatusBG, sortIntoDatedArray };
+function getMinMaxTempearture(tempArray) {
+  let minTemp = tempArray[0];
+  let maxTemp = tempArray[0];
+
+  for (let i = 1; i < tempArray.length; i++) {
+    if (tempArray[i] < minTemp) {
+      minTemp = tempArray[i];
+    } else if (tempArray[i] > maxTemp) {
+      maxTemp = tempArray[i];
+    }
+  }
+
+  minTemp = Math.round(minTemp);
+  maxTemp = Math.round(maxTemp);
+
+  return { minTemp, maxTemp };
+}
+
+export {
+  convertTo12hrs,
+  getWeatherStatusBG,
+  sortIntoDatedArray,
+  getMinMaxTempearture,
+};
