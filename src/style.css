@@ -16,7 +16,7 @@ body {
 }
 
 #main {
-    width: max(50%,400px);
+    width: min(100%,1000px);
     height: 70%;
     /* margin: auto; */
     padding: 30px 20px;
@@ -79,7 +79,7 @@ body {
 }
 
 #upcoming_weather_wrapper {
-    width: 50%;
+    width: min(100%,1000px);
 
     display: flex;
     flex-direction: column;
@@ -91,11 +91,26 @@ body {
     width: 100%;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
+    padding: 0 5px;
     border: 1px solid black;
 }
 
 .upcoming_weather > * {
     font-size: 0.9rem;
+}
 
+.weather_icon > img {
+    height: 30px;
+    width: 30px;
+    margin-top: 5px;
+}
+
+.min_max_temp {
+    width: 90px;
+}
+
+.weather_desc {
+    width: 70px;
 }
