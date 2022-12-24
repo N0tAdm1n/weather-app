@@ -1,3 +1,7 @@
+import Sunny from "../images/sunshine.png";
+import Rainy from "../images/rainy.png";
+import Cloudy from "../images/cloudy-day.png";
+
 // convert 24hr format to 12hr
 function convertTo12hrs(time24hrs) {
   let timeArray = time24hrs.split(":");
@@ -71,7 +75,6 @@ function getDayFromFullDate(text) {
 function sortIntoDatedArray(data) {
   let datedArray = [];
   let currentDay = Number(new Date().getDate());
-
   for (let i = 0, tempArray = []; i < data.length; i++) {
     if (currentDay == getDayFromFullDate(data[i].dt_txt)) {
       tempArray.push(data[i].main.feels_like);
@@ -79,6 +82,7 @@ function sortIntoDatedArray(data) {
       datedArray.push({
         date: currentDay,
         tempArray,
+        weatherDesc: data[i].weather[0].main,
       });
 
       currentDay = getDayFromFullDate(data[i].dt_txt);
@@ -96,7 +100,8 @@ function sortIntoDatedArray(data) {
   return datedArray;
 }
 
-function getMinMaxTempearture(tempArray) {
+// return the rounded min max temp from a given array
+function getMinMaxTemperature(tempArray) {
   let minTemp = tempArray[0];
   let maxTemp = tempArray[0];
 
@@ -114,9 +119,29 @@ function getMinMaxTempearture(tempArray) {
   return { minTemp, maxTemp };
 }
 
+function getWeatherIcon(weatherDesc) {
+  let imageSrc;
+  switch (weatherDesc) {
+    case "Rain":
+      imageSrc = Rainy;
+      break;
+    case "Clouds":
+      imageSrc = Cloudy;
+      break;
+    default:
+      imageSrc = Sunny;
+  }
+
+  const icon = new Image();
+  icon.src = imageSrc;
+
+  return icon;
+}
+
 export {
   convertTo12hrs,
   getWeatherStatusBG,
   sortIntoDatedArray,
-  getMinMaxTempearture,
+  getMinMaxTemperature,
+  getWeatherIcon,
 };
